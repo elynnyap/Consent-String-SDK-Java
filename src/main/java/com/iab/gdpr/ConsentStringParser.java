@@ -235,8 +235,11 @@ public class ConsentStringParser {
 	}
 
 	private boolean findVendorIdInRange(int vendorId) {
-	  for (RangeEntry rangeEntry : rangeEntries) {
-	  	if (rangeEntry.containsVendorId(vendorId)) return true;
+
+		for (RangeEntry entry : rangeEntries) {
+			if (entry.containsVendorId(vendorId)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -244,7 +247,7 @@ public class ConsentStringParser {
 	/**
 	 * @return a boolean describing if a vendor has consented to a particular vendor. The lowest vendor ID is 1.
 	 *
-	 *         This method, along with {@link isPurposeAllowed} fully describes the user consent for a particular action
+	 *         This method, along with {@link #isPurposeAllowed(int)} fully describes the user consent for a particular action
 	 *         by a given vendor.
 	 */
 	public boolean isVendorAllowed(int vendorId) {
@@ -275,6 +278,14 @@ public class ConsentStringParser {
 
 		public boolean containsVendorId(int vendorId) {
 			return vendorId >= minVendorId && vendorId <= maxVendorId;
+		}
+
+		public boolean idIsGreaterThanMax(int vendorId) {
+			return vendorId > maxVendorId;
+		}
+
+		public boolean isIsLessThanMin(int vendorId) {
+			return vendorId < minVendorId;
 		}
 	}
 
